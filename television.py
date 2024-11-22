@@ -19,6 +19,11 @@ class Television:
         """Mute or unmute the TV."""
         if self._status:
             self._muted = not self._muted
+            if self._muted:
+                self._previous_volume = self._volume  # Save the current volume before muting
+                self._volume = Television.MIN_VOLUME
+            else:
+                self._volume = self._previous_volume  # Restore the volume when unmuting
 
     def channel_up(self) -> None:
         """Increase the TV channel."""
@@ -34,7 +39,7 @@ class Television:
         """Increase the TV volume."""
         if self._status:
             if self._muted:
-                self._muted = False
+                self.mute()  # Unmute if volume control is used
             if self._volume < Television.MAX_VOLUME:
                 self._volume += 1
 
@@ -42,11 +47,10 @@ class Television:
         """Decrease the TV volume."""
         if self._status:
             if self._muted:
-                self._muted = False
+                self.mute()  # Unmute if volume control is used
             if self._volume > Television.MIN_VOLUME:
                 self._volume -= 1
 
     def __str__(self) -> str:
         """Return the TV's status, channel, and volume."""
         return f"Power {'On' if self._status else 'Off'}, Channel {self._channel}, Volume {self._volume}"
-
