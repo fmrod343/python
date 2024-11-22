@@ -54,5 +54,3 @@ class Television:
     def __str__(self):
         """Return the TV's status, channel, and volume."""
         return f"Power {'On' if self._status else 'Off'}, Channel {self._channel}, Volume {self._volume}"
-
-
